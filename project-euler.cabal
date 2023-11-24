@@ -86,6 +86,7 @@ executable project-euler
       Problem20
       Problem21
       Problem22
+      Problem23
       Problem67
 
     -- LANGUAGE extensions used by modules in this package.
@@ -100,6 +101,7 @@ executable project-euler
      , transformers ^>= 0.6.1.1
      , MissingH ^>= 1.6.0.1
      , criterion ^>= 1.6.3.0
+     , unordered-containers ^>= 0.2.19.1
 
     -- Directories containing source files.
     hs-source-dirs:   app

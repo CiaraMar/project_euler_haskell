@@ -22,6 +22,7 @@ import Problem2 as P2 (problem2)
 import Problem20 as P20 (problem20)
 import Problem21 as P21 (problem21)
 import Problem22 as P22 (problem22)
+import Problem23 as P23 (problem23)
 import Problem3 as P3 (problem3)
 import Problem4 as P4 (problem4)
 import Problem5 as P5 (problem5)
@@ -75,7 +76,7 @@ problems =
   , AProblems P20.problem20
   , AProblems P21.problem21
   , AProblems P22.problem22
-  , undefined
+  , AProblems P23.problem23
   , undefined
   , undefined
   , undefined
