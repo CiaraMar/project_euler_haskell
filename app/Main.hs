@@ -3,7 +3,6 @@
 module Main where
 
 import Control.Monad.Trans.Reader (runReader)
-import Criterion.Main (bench, bgroup, defaultMain, env, whnfAppIO)
 import Data.ByteString as B (readFile)
 
 -- TODO use Template Haskell for Meta Programming
@@ -23,6 +22,9 @@ import Problem20 as P20 (problem20)
 import Problem21 as P21 (problem21)
 import Problem22 as P22 (problem22)
 import Problem23 as P23 (problem23)
+import Problem24 as P24 (problem24)
+import Problem25 as P25 (problem25)
+import Problem26 as P26 (problem26)
 import Problem3 as P3 (problem3)
 import Problem4 as P4 (problem4)
 import Problem5 as P5 (problem5)
@@ -77,8 +79,9 @@ problems =
   , AProblems P21.problem21
   , AProblems P22.problem22
   , AProblems P23.problem23
-  , undefined
-  , undefined
+  , AProblems P24.problem24
+  , AProblems P25.problem25
+  , AProblems P26.problem26
   , undefined
   , undefined
   , undefined
@@ -123,15 +126,9 @@ problems =
   , AProblems P67.problem67
   ]
 
-setupEnv :: IO (Int, Int -> IO Int)
-setupEnv = do
-  args <- getArgs
-  let n = read (last args) :: Int
-  return (n, \m -> evalProblem m (problems !! (m - 1)))
-
 main :: IO ()
 main = do
-  (n, problem) <- setupEnv
-  answer <- problem n
+  args <- getArgs
+  let n = read (last args) :: Int
+  answer <- evalProblem n (problems !! (n - 1))
   print answer
-  defaultMain [env setupEnv $ \ ~(n, problem) -> bgroup "main" [bench ("problem " ++ show n) $ whnfAppIO problem n]]
