@@ -106,3 +106,13 @@ splits [] _ = []
 splits (l:ls) xs =
   let (h, xs') = splitAt l xs
    in h : splits ls xs'
+
+takeUntil :: (a -> Bool) -> [a] -> [a]
+takeUntil p =
+  foldr
+    (\x ys ->
+       x :
+       if p x
+         then []
+         else ys)
+    []
