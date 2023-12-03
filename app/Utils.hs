@@ -134,6 +134,6 @@ uncurry4 f (a, b, c, d) = f a b c d
 combosR :: Int -> [a] -> [[a]]
 combosR _ [] = []
 combosR 0 _ = [[]]
-combosR n ls = concat $ zipWith f ls (tails ls)
+combosR n ls = concatMap f (tails ls)
   where
-    f x = map (x :) . combosR (n - 1)
+    f xs = map (head xs :) (combosR (n - 1) xs)
