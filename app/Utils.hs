@@ -2,8 +2,9 @@
 
 module Utils where
 
-import Control.Arrow ((***), second)
+import Control.Arrow ((&&&), (***), second)
 import Control.Monad.Trans.Reader (ask)
+import Data.Bits (FiniteBits, countLeadingZeros, finiteBitSize)
 import qualified Data.ByteString as B (ByteString)
 import qualified Data.ByteString.Char8 as BC (readInt, readInteger)
 import Data.List (group, sort)
@@ -116,3 +117,16 @@ takeUntil p =
          then []
          else ys)
     []
+
+-- Principle of Inclusion / Exclusion
+pieCount :: Num num => ([a] -> num) -> [a] -> num
+pieCount f = foldr ((\(n, s) acc -> acc + n * s) . (f &&& sgn . odd . length)) 0 . subsets
+  where
+    sgn True = -1
+    sgn False = 1
+
+ilog2 :: FiniteBits b => b -> Int
+ilog2 x = finiteBitSize x - 1 - countLeadingZeros x
+
+uncurry4 :: (t1 -> t2 -> t3 -> t4 -> t5) -> (t1, t2, t3, t4) -> t5
+uncurry4 f (a, b, c, d) = f a b c d
