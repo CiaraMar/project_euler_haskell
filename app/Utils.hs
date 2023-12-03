@@ -138,5 +138,5 @@ combosRn n ls = concatMap f (tails ls)
   where
     f xs = map (head xs :) (combosRn (n - 1) xs)
 
-combosR :: [a] -> [[a]]
-combosR ls = concatMap (`combosRn` ls) [0 ..]
+combosR :: [Int] -> [a] -> [[a]]
+combosR ns ls = concatMap (`combosRn` ls) ns
