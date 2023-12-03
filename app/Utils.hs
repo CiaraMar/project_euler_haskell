@@ -131,9 +131,12 @@ ilog2 x = finiteBitSize x - 1 - countLeadingZeros x
 uncurry4 :: (t1 -> t2 -> t3 -> t4 -> t5) -> (t1, t2, t3, t4) -> t5
 uncurry4 f (a, b, c, d) = f a b c d
 
-combosR :: Int -> [a] -> [[a]]
-combosR _ [] = []
-combosR 0 _ = [[]]
-combosR n ls = concatMap f (tails ls)
+combosRn :: Int -> [a] -> [[a]]
+combosRn _ [] = []
+combosRn 0 _ = [[]]
+combosRn n ls = concatMap f (tails ls)
   where
-    f xs = map (head xs :) (combosR (n - 1) xs)
+    f xs = map (head xs :) (combosRn (n - 1) xs)
+
+combosR :: [a] -> [[a]]
+combosR ls = concatMap (`combosRn` ls) [0 ..]
