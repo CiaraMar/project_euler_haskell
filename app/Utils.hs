@@ -140,3 +140,14 @@ combosRn n ls = concatMap f (tails ls)
 
 combosR :: [Int] -> [a] -> [[a]]
 combosR ns ls = concatMap (`combosRn` ls) ns
+
+intPartitions :: Int -> [Int] -> [[Int]]
+intPartitions _ [] = []
+intPartitions 0 _ = [[]]
+intPartitions n ls = concatMap f (tails ls)
+  where
+    f [] = []
+    f xs@(x:_) =
+      if n >= x
+        then map (x :) (intPartitions (n - x) xs)
+        else []

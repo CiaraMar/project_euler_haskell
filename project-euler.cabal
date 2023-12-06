@@ -51,7 +51,7 @@ extra-doc-files:    CHANGELOG.md
 -- extra-source-files:
 
 common warnings
-    ghc-options: -Wall
+    ghc-options: -Wall -O2
 
 executable project-euler
     -- Import common warning flags.
@@ -94,6 +94,7 @@ executable project-euler
       Problem28
       Problem29
       Problem30
+      Problem31
       Problem67
 
     -- LANGUAGE extensions used by modules in this package.
