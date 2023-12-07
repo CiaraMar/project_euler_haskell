@@ -7,7 +7,7 @@ import Control.Monad.Trans.Reader (ask)
 import Data.Bits (FiniteBits, countLeadingZeros, finiteBitSize)
 import qualified Data.ByteString as B (ByteString)
 import qualified Data.ByteString.Char8 as BC (readInt, readInteger)
-import Data.List (group, sort, tails)
+import Data.List (group, sort, subsequences, tails)
 import Data.Numbers.Primes (primes)
 
 import Types (ProblemWrapper(ProblemWrapper))
@@ -130,6 +130,11 @@ ilog2 x = finiteBitSize x - 1 - countLeadingZeros x
 
 uncurry4 :: (t1 -> t2 -> t3 -> t4 -> t5) -> (t1, t2, t3, t4) -> t5
 uncurry4 f (a, b, c, d) = f a b c d
+
+combosN :: Int -> [a] -> [[a]]
+combosN 0 _ = [[]]
+combosN _ [] = []
+combosN n (x:xs) = map (x :) (combosN (n - 1) xs) ++ combosN n xs
 
 combosRn :: Int -> [a] -> [[a]]
 combosRn _ [] = []
