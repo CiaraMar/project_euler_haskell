@@ -9,6 +9,7 @@ import qualified Data.ByteString as B (ByteString)
 import qualified Data.ByteString.Char8 as BC (readInt, readInteger)
 import Data.List (group, sort, subsequences, tails, foldl1')
 import Data.Numbers.Primes (primes)
+import Data.Array (Ix, Array, accumArray, inRange)
 
 import Types (ProblemWrapper(ProblemWrapper))
 
@@ -167,3 +168,6 @@ intPartitions n ls = concatMap f (tails ls)
       if n >= x
         then map (x :) (intPartitions (n - x) xs)
         else []
+
+hist :: (Ix a, Num b) => (a,a) -> [a] -> Array a b
+hist bnds is = accumArray (+) 0 bnds [(i, 1) | i<-is, inRange bnds i]
