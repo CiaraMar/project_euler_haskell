@@ -7,7 +7,7 @@ import Control.Monad.Trans.Reader (ask)
 import Data.Bits (FiniteBits, countLeadingZeros, finiteBitSize)
 import qualified Data.ByteString as B (ByteString)
 import qualified Data.ByteString.Char8 as BC (readInt, readInteger)
-import Data.List (group, sort, subsequences, tails)
+import Data.List (group, sort, subsequences, tails, foldl1')
 import Data.Numbers.Primes (primes)
 
 import Types (ProblemWrapper(ProblemWrapper))
@@ -109,6 +109,9 @@ digits a = _digits a []
       _digits n xs = _digits q (r:xs)
          where
             (q, r) = n `divMod` 10
+
+fromDigits :: [Int] -> Int
+fromDigits = foldl1' (\m n -> 10*m + n)
 
 splits :: [Int] -> [a] -> [[a]]
 splits [] _ = []
