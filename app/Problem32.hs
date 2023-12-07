@@ -12,7 +12,9 @@ candidateProduct :: ([Int], [Int]) -> [Int]
 candidateProduct (a, b) = digits (fromDigits a * fromDigits b)
 
 checkCandidate :: (([Int], [Int]), [Int]) -> Bool
-checkCandidate ((a, b), c) = all (==1) . elems . hist (1,9) $ (a ++ b ++ c)
+checkCandidate ((a, b), c) = (head counts == 0) && all (==1) (drop 1 counts) 
+   where
+      counts = elems . hist (0,9) $ (a ++ b ++ c)
 
 problem32 :: Int
 problem32 = sum . uniq . sort $ products
