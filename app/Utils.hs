@@ -102,6 +102,14 @@ parseIntegers = parseIntegrals BC.readInteger
 numDigits :: Integral int => int -> int
 numDigits = ceiling . logBase 10 . fromIntegral
 
+digits :: Int -> [Int]
+digits a = _digits a []
+   where 
+      _digits 0 xs = xs
+      _digits n xs = _digits q (r:xs)
+         where
+            (q, r) = n `divMod` 10
+
 splits :: [Int] -> [a] -> [[a]]
 splits [] _ = []
 splits (l:ls) xs =
