@@ -1,22 +1,18 @@
 module Problem32 where
-import Utils (digits, fromDigits, combosN, hist)
+import Utils (digits, fromDigits, combosN, hist, mapTuple)
 import Data.Array (elems)
-import Control.Arrow ((&&&))
 import Data.List (permutations, sort)
 import Data.List.Utils (uniq)
 
-makeCandidates :: [([Int], [Int])]
-makeCandidates = [splitAt n perm | n <- [1, 2], combo <- combosN 5 [1..9], perm <- permutations combo]
-
-candidateProduct :: ([Int], [Int]) -> [Int]
-candidateProduct (a, b) = digits (fromDigits a * fromDigits b)
-
-checkCandidate :: (([Int], [Int]), [Int]) -> Bool
-checkCandidate ((a, b), c) = (head counts == 0) && all (==1) (drop 1 counts) 
+makeCandidates :: [([Int], Int)]
+makeCandidates = [(perm, products n perm) | n <- [1, 2], combo <- combosN 5 [1..9], perm <- permutations combo]
    where
-      counts = elems . hist (0,9) $ (a ++ b ++ c)
+      products n p = uncurry (*) . mapTuple fromDigits $ splitAt n p
+
+checkCandidate :: [Int] -> Int -> Bool
+checkCandidate a c = (head counts == (0 :: Int)) && all (==1) (drop 1 counts) 
+   where
+      counts = elems . hist (0,9) $ (a ++ digits c)
 
 problem32 :: Int
-problem32 = sum . uniq . sort $ products
-   where
-      products = map (fromDigits . snd) (filter checkCandidate (map (id &&& candidateProduct) makeCandidates))
+problem32 = sum . uniq . sort . map snd . filter (uncurry checkCandidate) $ makeCandidates

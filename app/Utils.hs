@@ -2,7 +2,8 @@
 
 module Utils where
 
-import Control.Arrow ((&&&), (***), second)
+import Control.Arrow ((&&&), (***), second, Arrow)
+import Control.Monad (join)
 import Control.Monad.Trans.Reader (ask)
 import Data.Bits (FiniteBits, countLeadingZeros, finiteBitSize)
 import qualified Data.ByteString as B (ByteString)
@@ -171,3 +172,6 @@ intPartitions n ls = concatMap f (tails ls)
 
 hist :: (Ix a, Num b) => (a,a) -> [a] -> Array a b
 hist bnds is = accumArray (+) 0 bnds [(i, 1) | i<-is, inRange bnds i]
+
+mapTuple :: Arrow a => a b' c' -> a (b', b') (c', c')
+mapTuple = join (***)
