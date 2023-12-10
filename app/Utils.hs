@@ -1,8 +1,9 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE GADTs #-}
 
 module Utils where
 
-import Control.Arrow ((&&&), (***), second, Arrow)
+import Control.Arrow ((&&&), (***), second, Arrow, first)
 import Control.Monad (join)
 import Control.Monad.Trans.Reader (ask)
 import Data.Bits (FiniteBits, countLeadingZeros, finiteBitSize)
@@ -175,3 +176,21 @@ hist bnds is = accumArray (+) 0 bnds [(i, 1) | i<-is, inRange bnds i]
 
 mapTuple :: Arrow a => a b' c' -> a (b', b') (c', c')
 mapTuple = join (***)
+
+data Fraction a where
+  Fraction :: (Integral a, Show a) => a -> a -> Fraction a
+
+instance Show (Fraction a) where
+  show (Fraction x y) = "(" ++ show x ++ "," ++ show y ++ ")"
+
+fraction :: Fraction a -> (a, a)
+fraction (Fraction x y) = (x, y)
+
+reduceFraction :: (Integral a, Show a) => Fraction a -> Fraction a
+reduceFraction = uncurry Fraction . mapTuple product . uncurry _reduce . mapTuple primeFactors . fraction
+  where
+    _reduce (x:xs) (y:ys) = case compare x y of 
+                              EQ -> _reduce xs ys
+                              LT -> first (x:) $ _reduce xs (y:ys)
+                              GT -> second (y:) $ _reduce (x:xs) ys
+    _reduce xs ys = (xs, ys)

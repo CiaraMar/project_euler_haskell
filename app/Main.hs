@@ -32,6 +32,7 @@ import Problem3 as P3 (problem3)
 import Problem30 as P30 (problem30)
 import Problem31 as P31 (problem31)
 import Problem32 as P32 (problem32)
+import Problem33 as P33 (problem33)
 import Problem4 as P4 (problem4)
 import Problem5 as P5 (problem5)
 import Problem6 as P6 (problem6)
@@ -94,7 +95,7 @@ problems =
   , AProblems P30.problem30
   , AProblems P31.problem31
   , AProblems P32.problem32
-  , undefined
+  , AProblems P33.problem33
   , undefined
   , undefined
   , undefined

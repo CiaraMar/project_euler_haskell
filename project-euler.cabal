@@ -96,6 +96,7 @@ executable project-euler
       Problem30
       Problem31
       Problem32
+      Problem33
       Problem67
 
     -- LANGUAGE extensions used by modules in this package.
